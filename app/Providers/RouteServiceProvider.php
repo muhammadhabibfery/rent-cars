@@ -30,6 +30,12 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Route::macro('adminRoutes', function () {
+            Route::resource('admins', 'UserController')
+                ->parameters(['admins' => 'user:phone'])
+                ->except(['show', 'edit', 'update']);
+        });
+
         Route::macro('customerRoutes', function () {
             Route::get('/customers/edit/{customer:slug}', 'CustomerController@edit')->name('customers.edit');
             Route::resource('customers', 'CustomerController')

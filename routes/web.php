@@ -25,6 +25,7 @@ Route::group(['middleware' => ['prevent-back']], function () {
     Route::group(['middleware' => ['auth']], function () {
         Route::get('/dashboard', 'HomeController@index')->name('dashboard');
 
+        Route::adminRoutes();
         Route::customerRoutes();
     });
 });

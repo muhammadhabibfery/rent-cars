@@ -16,7 +16,8 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $customers = Customer::latest()->paginate(10);
+        $customers = Customer::latest()
+            ->paginate(10);
         $search = request()->search;
 
         if ($search) {

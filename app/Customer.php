@@ -25,6 +25,6 @@ class Customer extends Model
 
     public function getAvatar()
     {
-        return ($this->avatar) ? asset('/storage' . '/' . $this->avatar) : asset('/storage/default/default.jpg');
+        return ($this->avatar) ? asset('/storage' . '/' . $this->avatar) : asset('/img/default/default.jpg');
     }
 }

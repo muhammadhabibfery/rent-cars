@@ -1,7 +1,7 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark toggled" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('dashboard') }}">
         <div class="sidebar-brand-icon">
             <i class="fas fa-car"></i>
         </div>
@@ -23,7 +23,7 @@
 
     <!-- Nav Item - Admins -->
     <li class="nav-item {{ request()->is('admins*') ? ' active' : '' }}">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="{{ route('admins.index') }}">
             <i class="fas fa-user-tag"></i>
             <span>Menu Admin</span></a>
     </li>
