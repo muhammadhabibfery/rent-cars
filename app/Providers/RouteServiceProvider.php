@@ -21,7 +21,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    public const HOME = '/home';
+    public const HOME = '/dashboard';
 
     /**
      * Define your route model bindings, pattern filters, etc.
@@ -30,7 +30,12 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Route::macro('customerRoutes', function () {
+            Route::get('/customers/edit/{customer:slug}', 'CustomerController@edit')->name('customers.edit');
+            Route::resource('customers', 'CustomerController')
+                ->parameters(['customers' => 'customer:slug'])
+                ->except(['edit']);
+        });
 
         parent::boot();
     }

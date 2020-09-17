@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('home');
+    return redirect()->route('login');
 });
 
 
@@ -22,7 +22,11 @@ Route::get('/', function () {
 Route::group(['middleware' => ['prevent-back']], function () {
     Auth::routes(['register' => false]);
 
-    // Route::group(['middleware' => ['auth']], function () {
-    //     Route::get('/home', 'HomeController@index')->name('home');
-    // });
+    Route::group(['middleware' => ['auth']], function () {
+        Route::get('/dashboard', 'HomeController@index')->name('dashboard');
+
+        Route::customerRoutes();
+    });
 });
+
+// Next : Detail customer.
