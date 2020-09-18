@@ -24,12 +24,19 @@ class UserRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules = [
             'name' => 'required|max:60',
             'email' => ['required', 'email', Rule::unique('users', 'email')->ignore($this->user)],
             'phone' => ['required', 'numeric', 'digits_between:10,12', Rule::unique('users', 'phone')->ignore($this->user)],
             'address' => 'required',
             'gambar' => 'nullable|mimes:png,jpg,jpeg|file|max:2500',
         ];
+
+        if (request()->isMethod('patch') || request()->isMethod('put')) {
+            $rules['email'] = ['required', 'email', Rule::unique('users', 'email')->ignore(auth()->id())];
+            $rules['phone'] = ['required', 'numeric', 'digits_between:10,12', Rule::unique('users', 'phone')->ignore(auth()->id())];
+        }
+
+        return $rules;
     }
 }

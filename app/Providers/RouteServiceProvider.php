@@ -43,6 +43,13 @@ class RouteServiceProvider extends ServiceProvider
                 ->except(['edit']);
         });
 
+        Route::macro('profileRoutes', function () {
+            Route::get('/profile', 'ProfileController@editProfile')->name('profiles.edit');
+            Route::patch('/profile', 'ProfileController@updateProfile')->name('profiles.update');
+            Route::get('/profile/password', 'ProfileController@editPassword')->name('profiles.password.edit');
+            Route::patch('/profile/password', 'ProfileController@updatePassword')->name('profiles.password.update');
+        });
+
         parent::boot();
     }
 

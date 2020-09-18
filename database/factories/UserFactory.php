@@ -5,7 +5,6 @@
 use App\User;
 use Faker\Generator as Faker;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,7 +22,7 @@ $factory->define(User::class, function (Faker $faker) {
         'name' => 'administrator',
         'email' => 'admin@kbf-trans.com',
         'password' => Hash::make('aaaaa'),
-        'phone' => '089765432109',
+        'phone' => '08123456789',
         'address' => 'jl. pamulang tangerang selatan',
     ];
 });

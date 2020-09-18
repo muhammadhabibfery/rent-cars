@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
 use App\User;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
@@ -59,7 +59,10 @@ class UserController extends Controller
 
         $data = array_merge(
             $request->validated(),
-            ['avatar' => uploadImage($request, 'admins')]
+            [
+                'password' => Hash::make($request->phone),
+                'avatar' => uploadImage($request, 'admins')
+            ]
         );
 
         User::create($data);

@@ -27,7 +27,11 @@ Route::group(['middleware' => ['prevent-back']], function () {
 
         Route::adminRoutes();
         Route::customerRoutes();
+
+        Route::profileRoutes();
     });
 });
 
-// Next : Detail customer.
+// Current Problem : Tidak berhasil Login meskipun email & password sudah Benar.
+                        // (Analisa saat ini : Terjadi masalah pada UserFactory dan UserSeeder)
+                            // UserFactory : Field password tidak diisi tapi bisa terisi otomatis dan sudah dienkripsi.
