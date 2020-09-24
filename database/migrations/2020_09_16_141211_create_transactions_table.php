@@ -17,10 +17,13 @@ class CreateTransactionsTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('customer_id')->constrained()->onDelete('cascade');
-            $table->string('invoice_number');
+            $table->bigInteger('dp');
+            $table->bigInteger('cash')->nullable();
+            $table->string('invoice_number')->unique();
             $table->timestamp('start_date');
             $table->timestamp('till_date');
             $table->timestamp('late_date');
+            $table->enum('status', ['BERJALAN', 'TELAT', 'SELESAI']);
             $table->timestamps();
         });
     }

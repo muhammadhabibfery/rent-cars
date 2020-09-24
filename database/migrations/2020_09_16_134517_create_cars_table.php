@@ -17,13 +17,17 @@ class CreateCarsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('merk');
-            $table->year('years');
-            $table->string('plat_number');
+            $table->string('years', 4);
+            $table->string('plat_number')->unique();
             $table->string('color');
+            $table->bigInteger('price');
             $table->string('car_image')->nullable();
-            $table->double('price');
             $table->enum('status', ['AVAILABLE', 'NOT AVAILABLE']);
+            $table->integer('created_by');
+            $table->integer('updated_by')->nullable();
+            $table->integer('deleted_by')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

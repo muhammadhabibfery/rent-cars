@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
+use App\Policies\UserPolicy;
 use App\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -61,7 +62,7 @@ class UserController extends Controller
             $request->validated(),
             [
                 'password' => Hash::make($request->phone),
-                'avatar' => uploadImage($request, 'admins')
+                'avatar' => uploadImage($request, 'users')
             ]
         );
 

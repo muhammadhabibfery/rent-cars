@@ -13,8 +13,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        'App\User' => 'App\Policies\UserPolicy',
-        'App\User' => 'App\Policies\ProfilePasswordPolicy',
+        // 'App\User' => 'App\Policies\UserPolicy',
     ];
 
     /**
@@ -26,6 +25,8 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Gate::define('edit-profile', function ($user) {
+            return $user->name != 'Administrator';
+        });
     }
 }

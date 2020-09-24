@@ -2,10 +2,11 @@
 
 namespace App\Http\Requests;
 
+use App\Car;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class CustomerRequest extends FormRequest
+class CarRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,13 +25,13 @@ class CustomerRequest extends FormRequest
      */
     public function rules()
     {
-        dd($this->route()->parameter('customer'));
         return [
             'name' => 'required|max:60',
-            'nik' => ['required', 'numeric', Rule::unique('customers', 'nik')->ignore($this->customer)],
-            'phone' => ['required', 'numeric', 'digits_between:10,12', Rule::unique('customers', 'phone')->ignore($this->customer)],
-            'email' => ['nullable', 'email', Rule::unique('customers', 'email')->ignore($this->customer)],
-            'address' => 'required',
+            'merk' => 'required|max:60',
+            'years' => 'required|numeric|digits:4',
+            'plat_number' => ['required', 'alpha_num', 'max:10', Rule::unique('cars', 'plat_number')->ignore($this->car)],
+            'color' => 'required|alpha|max:20',
+            'price' => 'required|numeric',
             'gambar' => 'nullable|mimes:png,jpg,jpeg|file|image|max:2500',
         ];
     }

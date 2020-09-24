@@ -27,11 +27,12 @@ Route::group(['middleware' => ['prevent-back']], function () {
 
         Route::adminRoutes();
         Route::customerRoutes();
+        Route::carRoutes();
 
         Route::profileRoutes();
     });
 });
 
-// Current Problem : Tidak berhasil Login meskipun email & password sudah Benar.
-                        // (Analisa saat ini : Terjadi masalah pada UserFactory dan UserSeeder)
-                            // UserFactory : Field password tidak diisi tapi bisa terisi otomatis dan sudah dienkripsi.
+// Next : Buat Fitur Transaksi
+
+//NOTE : Buat opsional parameter pada show/detail car, Supaya tidak perlu mengisi parameter pada method show dalam CarController

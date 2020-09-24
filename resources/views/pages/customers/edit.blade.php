@@ -72,6 +72,7 @@
                                 </div>
                                 <div class="col-sm-7 my-auto mx-auto">
                                     <label for="gambar">Ubah Profil Customer</label>
+                                    <small class="ml-2">(*opsional)</small>
                                     <input id="gambar" name="gambar" type="file"
                                         class="form-control @error('gambar') is-invalid @enderror"
                                         value="{{ old('gambar') }}">

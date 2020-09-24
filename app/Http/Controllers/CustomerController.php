@@ -58,7 +58,7 @@ class CustomerController extends Controller
             ]
         );
 
-        $customer = Customer::create($data);
+        Customer::create($data);
 
         return redirect()->route('customers.index')
             ->with('status', 'Data customer berhasil dibuat.');
@@ -117,9 +117,14 @@ class CustomerController extends Controller
      */
     public function destroy(Customer $customer)
     {
-        $customer->update(['deleted_by' => auth()->id()]);
-
         if ($customer->avatar) Storage::disk('public')->delete($customer->avatar);
+
+        $customer->update(
+            [
+                'deleted_by' => auth()->id(),
+                'avatar' => null
+            ]
+        );
 
         $customer->delete();
 

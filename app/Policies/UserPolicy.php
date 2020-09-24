@@ -40,7 +40,7 @@ class UserPolicy
      */
     public function create(User $user)
     {
-        return $user->name === 'Administrator';
+        return $user->name == 'Administrator';
     }
 
     /**
@@ -64,7 +64,7 @@ class UserPolicy
      */
     public function delete(User $user)
     {
-        return $user->name === 'Administrator';
+        return $user->name == 'Administrator';
     }
 
     /**

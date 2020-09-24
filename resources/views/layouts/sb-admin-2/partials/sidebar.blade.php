@@ -42,11 +42,22 @@
     <hr class="sidebar-divider my-0">
 
     <!-- Nav Item - Cars -->
-    <li class="nav-item">
-        <a class="nav-link" href="index.html">
+    <li class="nav-item{{ request()->is('cars*') ? ' active' : '' }}">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+            aria-expanded="true" aria-controls="collapseUtilities">
             <i class="fas fa-fw fa-car-alt"></i>
-            <span>Menu Mobil</span></a>
+            <span>Menu Mobil</span>
+        </a>
+        <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item{{ request()->is('cars/available*') ? ' active' : '' }}"
+                    href="{{ route('cars.available') }}">Mobil Tersedia</a>
+                <a class="collapse-item{{ request()->is('cars/not-available*') ? ' active' : '' }}"
+                    href="{{ route('cars.not-available') }}">Mobil Tersewa</a>
+            </div>
+        </div>
     </li>
+
 
     <!-- Divider -->
     <hr class="sidebar-divider my-0">

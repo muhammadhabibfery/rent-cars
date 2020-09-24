@@ -43,6 +43,17 @@ class RouteServiceProvider extends ServiceProvider
                 ->except(['edit']);
         });
 
+        Route::macro('carRoutes', function () {
+            Route::get('/cars/available', 'CarController@available')->name('cars.available');
+            Route::get('/cars/not-available', 'CarController@notAvailable')->name('cars.not-available');
+            Route::get('/cars/available/create', 'CarController@create')->name('cars.available.create');
+            Route::post('/cars/available', 'CarController@store')->name('cars.available.store');
+            Route::get('/cars/edit/{car:plat_number}', 'CarController@edit')->name('cars.available.edit');
+            Route::patch('/cars/available/{car:plat_number}', 'CarController@update')->name('cars.available.update');
+            Route::delete('/cars/available/{car:plat_number}', 'CarController@destroy')->name('cars.available.destroy');
+            Route::get('/cars/{status}/{car:plat_number}/', 'CarController@show')->name('cars.show');
+        });
+
         Route::macro('profileRoutes', function () {
             Route::get('/profile', 'ProfileController@editProfile')->name('profiles.edit');
             Route::patch('/profile', 'ProfileController@updateProfile')->name('profiles.update');

@@ -15,8 +15,8 @@ class CreateCarTransactionTable extends Migration
     {
         Schema::create('car_transaction', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('transaction_id')->constrained()->onDelete('cascade');
             $table->foreignId('car_id')->constrained()->onDelete('cascade');
+            $table->foreignId('transaction_id')->constrained()->onDelete('cascade');
             $table->integer('quantity');
             $table->timestamps();
         });

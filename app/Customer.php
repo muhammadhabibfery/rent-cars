@@ -12,6 +12,11 @@ class Customer extends Model
 
     protected $guarded = ['gambar'];
 
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
+    }
+
     public function setNameAttribute($value)
     {
         $this->attributes['name'] = Str::title($value);
