@@ -56,13 +56,7 @@
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span class="font-weight-bold">Copyright CV KBF Trans 2020</span>
-                    </div>
-                </div>
-            </footer>
+            @include('layouts.sb-admin-2.partials.footer')
             <!-- End of Footer -->
 
         </div>
@@ -112,11 +106,11 @@
     <!-- Custom scripts for all pages-->
     <script src="{{ asset('/sb-admin-2/js/sb-admin-2.min.js') }}"></script>
     <script>
-        <?php
-        if (session('status')): ?>
-            swal("Sukses!", "{{ session('status') }}", "success");
-        <?php
-        endif; ?>
+        @if (session('success'))
+            swal("Sukses!", "{{ session('success') }}", "success");
+        @elseif (session('failed'))
+            swal("Gagal!", "{{ session('failed') }}", "error");
+        @endif
 
         document.addEventListener('click', function(e) {
             if (e.target.id == 'btnfr') {

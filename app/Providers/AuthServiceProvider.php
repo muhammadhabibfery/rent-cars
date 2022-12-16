@@ -24,9 +24,5 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-
-        Gate::define('edit-profile', function ($user) {
-            return $user->name != 'Administrator';
-        });
     }
 }

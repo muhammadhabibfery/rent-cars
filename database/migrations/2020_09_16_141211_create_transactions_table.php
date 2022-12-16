@@ -22,7 +22,7 @@ class CreateTransactionsTable extends Migration
             $table->string('invoice_number')->unique();
             $table->timestamp('start_date');
             $table->timestamp('till_date');
-            $table->timestamp('late_date');
+            $table->timestamp('late_date')->nullable();
             $table->enum('status', ['BERJALAN', 'TELAT', 'SELESAI']);
             $table->timestamps();
         });

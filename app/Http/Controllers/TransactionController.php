@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Transaction;
 use Illuminate\Http\Request;
+use Haruncpi\LaravelIdGenerator\IdGenerator;
 
 class TransactionController extends Controller
 {
@@ -24,7 +25,15 @@ class TransactionController extends Controller
      */
     public function create()
     {
-        //
+        $invoiceNumber = IdGenerator::generate([
+            'table' => 'transactions',
+            'field' => 'invoice_number',
+            'length' => 12,
+            'prefix' => "KBVTRANS" . date('j'),
+            'reset_on_prefix_change' => true
+        ]);
+
+        dd($invoiceNumber);
     }
 
     /**

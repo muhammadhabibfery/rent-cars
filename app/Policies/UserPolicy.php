@@ -17,7 +17,7 @@ class UserPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return $this->defineLogic($user);
     }
 
     /**
@@ -29,7 +29,7 @@ class UserPolicy
      */
     public function view(User $user)
     {
-        //
+        return $this->defineLogic($user);
     }
 
     /**
@@ -40,7 +40,7 @@ class UserPolicy
      */
     public function create(User $user)
     {
-        return $user->name == 'Administrator';
+        return $this->defineLogic($user);
     }
 
     /**
@@ -64,7 +64,7 @@ class UserPolicy
      */
     public function delete(User $user)
     {
-        return $user->name == 'Administrator';
+        return $this->defineLogic($user);
     }
 
     /**
@@ -89,5 +89,16 @@ class UserPolicy
     public function forceDelete(User $user)
     {
         //
+    }
+
+    /**
+     * define the logic for user policy
+     *
+     * @param  \App\User $user
+     * @return bool
+     */
+    private function defineLogic(User $user)
+    {
+        return auth()->user()->name == 'Administrator';
     }
 }

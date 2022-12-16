@@ -184,8 +184,6 @@ class CarController extends Controller
             ->latest()
             ->paginate(10);
 
-        $keyword = request()->search;
-
         if ($keyword) {
             $data = Car::where('status', $status)
                 ->where(function ($query) use ($keyword) {

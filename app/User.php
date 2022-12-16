@@ -4,20 +4,18 @@ namespace App;
 
 use Illuminate\Support\Str;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use Notifiable, SoftDeletes;
+    use Notifiable;
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $guarded = ['gambar'];
+    protected $guarded = ['id'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -37,26 +35,43 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * Get the transactions for the user
+     *
+     *
+     */
     public function transactions()
     {
         return $this->hasMany(Transaction::class);
     }
 
+    /**
+     * set the user's name
+     *
+     * @param  string $value
+     * @return void
+     */
     public function setNameAttribute($value)
     {
         $this->attributes['name'] = Str::title($value);
     }
 
+    /**
+     * set the user's email
+     *
+     * @param  string $value
+     * @return void
+     */
     public function setEmailAttribute($value)
     {
         $this->attributes['email'] = strtolower($value);
     }
 
-    public function setPhoneAttribute($value)
-    {
-        $this->attributes['phone'] = $value;
-    }
-
+    /**
+     * get the user's avatar
+     *
+     * @return mixed
+     */
     public function getAvatar()
     {
         return ($this->avatar) ? asset('/storage' . '/' . $this->avatar) : asset('/img/default/default.jpg');

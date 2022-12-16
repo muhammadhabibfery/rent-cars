@@ -21,6 +21,7 @@ $factory->define(User::class, function (Faker $faker) {
     return [
         'name' => 'administrator',
         'email' => 'admin@kbf-trans.com',
+        'nik' => '121212121212',
         'password' => Hash::make('aaaaa'),
         'phone' => '08123456789',
         'address' => 'jl. pamulang tangerang selatan',

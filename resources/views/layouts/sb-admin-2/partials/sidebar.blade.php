@@ -18,6 +18,7 @@
             <span>Dashboard</span></a>
     </li>
 
+    @can('create', App\User::class)
     <!-- Divider -->
     <hr class="sidebar-divider my-0">
 
@@ -27,6 +28,7 @@
             <i class="fas fa-user-tag"></i>
             <span>Menu Admin</span></a>
     </li>
+    @endcan
 
     <!-- Divider -->
     <hr class="sidebar-divider my-0">
@@ -43,12 +45,12 @@
 
     <!-- Nav Item - Cars -->
     <li class="nav-item{{ request()->is('cars*') ? ' active' : '' }}">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-            aria-expanded="true" aria-controls="collapseUtilities">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#menuMobil" aria-expanded="true"
+            aria-controls="menuMobil">
             <i class="fas fa-fw fa-car-alt"></i>
             <span>Menu Mobil</span>
         </a>
-        <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+        <div id="menuMobil" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item{{ request()->is('cars/available*') ? ' active' : '' }}"
                     href="{{ route('cars.available') }}">Mobil Tersedia</a>
@@ -63,10 +65,20 @@
     <hr class="sidebar-divider my-0">
 
     <!-- Nav Item - Transactions -->
-    <li class="nav-item">
-        <a class="nav-link" href="charts.html">
+    <li class="nav-item{{ request()->is('transactions*') ? ' active' : '' }}">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#menuTransaksi" aria-expanded="true"
+            aria-controls="menuTransaksi">
             <i class="fas fa-cash-register"></i>
-            <span>Menu Transaksi</span></a>
+            <span>Menu Transaksi</span>
+        </a>
+        <div id="menuTransaksi" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item{{ request()->is('transactions/create*') ? 'active' : '' }}"
+                    href="{{ route('transactions.create') }}">Buat Transaksi</a>
+                <a class="collapse-item{{ request()->is('transactions/*') ? 'active' : '' }}"
+                    href="{{ route('transactions.index') }}">Laporan Transaksi</a>
+            </div>
+        </div>
     </li>
 
     <!-- Divider -->

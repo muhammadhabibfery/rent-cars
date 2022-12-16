@@ -2,24 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProfilePasswordRequest;
 use App\Http\Requests\UserRequest;
-use App\User;
-use Illuminate\Support\Facades\Gate;
+use App\Traits\ImageHandler;
 use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
 
-    public function __construct()
-    {
-        $this->middleware(function ($request, $next) {
-            if (Gate::allows('edit-profile')) return $next($request);
-            abort(404);
-        })
-            ->except(['editPassword', 'updatePassword']);
-    }
+    use ImageHandler;
 
+    /**
+     * constant of route name
+     *
+     * @var string
+     */
+    private const ROUTE_DASHBOARD = 'dashboard';
+
+    /**
+     * Show the form edit user's profile.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function editProfile()
     {
         $user = auth()->user();
@@ -27,34 +30,90 @@ class ProfileController extends Controller
         return view('pages.profiles.edit', compact('user'));
     }
 
+    /**
+     * Update the user's profile.
+     *
+     * @param  \App\Http\Requests\UserRequest  $request
+     * @return mixed
+     */
     public function updateProfile(UserRequest $request)
     {
         $user = auth()->user();
 
         $data = array_merge(
-            $request->validated(),
-            ['avatar' => uploadImage($request, 'users', $user->avatar)]
+            $this->checkAdministratorData($request->validated()),
+            ['avatar' => $this->createImage($request, 'avatars', $user->avatar)]
         );
 
-        $user->update($data);
-
-        return redirect()->route('dashboard')
-            ->with('status', "Profil Admin {$user->name} berhasil diperbarui");
+        return $this->checkProcess(
+            self::ROUTE_DASHBOARD,
+            'Profil anda berhasil diperbarui',
+            function () use ($user, $data) {
+                if (!$user->update($data)) throw new \Exception("Profil anda gagal diperbarui");
+            }
+        );
     }
 
+    /**
+     * Show the form edit user's password.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function editPassword()
     {
         return view('pages.profiles.password.edit');
     }
 
-    public function updatePassword(ProfilePasswordRequest $request)
+    /**
+     * Update the user's password.
+     *
+     * @param  \App\Http\Requests\UserRequest  $request
+     * @return mixed
+     */
+    public function updatePassword(UserRequest $request)
     {
         $data = ['password' => Hash::make($request->validated()['new_password'])];
 
-        auth()->user()
-            ->update($data);
+        return $this->checkProcess(
+            self::ROUTE_DASHBOARD,
+            'Password berhasil diubah',
+            function () use ($data) {
+                if (!auth()->user()->update($data)) throw new \Exception('Password gagal diubah');
+            }
+        );
+    }
 
-        return redirect()->route('dashboard')
-            ->with(['status' => 'Password berhasil diubah.']);
+    /**
+     * check Administrator's Data
+     *
+     * @param  array $validatedData
+     * @return array
+     */
+    private function checkAdministratorData(array $validatedData)
+    {
+        if (auth()->user()->name === 'Administrator') return array_filter($validatedData, fn ($vd) => $vd !== 'Administrator');
+
+        return $validatedData;
+    }
+
+    /**
+     * Check one or more processes and catch them if fail
+     *
+     * @param  string $routeName
+     * @param  string $successMessage
+     * @param  callable $action
+     * @return \Illuminate\Http\Response
+     */
+    private function checkProcess(string $routeName, string $successMessage, callable $action)
+    {
+        try {
+            $action();
+        } catch (\Exception $e) {
+            return redirect()->route($routeName)
+                ->with('failed', $e->getMessage());
+        }
+
+        return redirect()->route($routeName)
+            ->with('success', $successMessage);
     }
 }

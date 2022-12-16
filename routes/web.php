@@ -28,11 +28,11 @@ Route::group(['middleware' => ['prevent-back']], function () {
         Route::adminRoutes();
         Route::customerRoutes();
         Route::carRoutes();
+        Route::transactionRoutes();
 
         Route::profileRoutes();
     });
 });
 
-// Next : Buat Fitur Transaksi
-
-//NOTE : Buat opsional parameter pada show/detail car, Supaya tidak perlu mengisi parameter pada method show dalam CarController
+// Next : Buat Fitur Transaksi (Halaman & Method index)
+    // ON PROGRESS : Buat Form Transaksi

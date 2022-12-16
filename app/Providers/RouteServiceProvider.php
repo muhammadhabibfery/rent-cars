@@ -37,21 +37,34 @@ class RouteServiceProvider extends ServiceProvider
         });
 
         Route::macro('customerRoutes', function () {
-            Route::get('/customers/edit/{customer:slug}', 'CustomerController@edit')->name('customers.edit');
+            Route::get('/customers/trash', 'CustomerController@indexTrash')->name('customers.trash');
+            Route::get('/customers/trash/{phone}', 'CustomerController@showTrash')->name('customers.trash.detail');
+            Route::get('/customers/restore/{phone}', 'CustomerController@restore')->name('customers.restore');
+            Route::delete('/customers/force-delete/{phone}', 'CustomerController@forceDelete')->name('customers.force-delete');
+            Route::get('/customers/edit/{customer:phone}', 'CustomerController@edit')->name('customers.edit');
             Route::resource('customers', 'CustomerController')
-                ->parameters(['customers' => 'customer:slug'])
+                ->parameters(['customers' => 'customer:phone'])
                 ->except(['edit']);
         });
 
         Route::macro('carRoutes', function () {
-            Route::get('/cars/available', 'CarController@available')->name('cars.available');
-            Route::get('/cars/not-available', 'CarController@notAvailable')->name('cars.not-available');
-            Route::get('/cars/available/create', 'CarController@create')->name('cars.available.create');
-            Route::post('/cars/available', 'CarController@store')->name('cars.available.store');
-            Route::get('/cars/edit/{car:plat_number}', 'CarController@edit')->name('cars.available.edit');
-            Route::patch('/cars/available/{car:plat_number}', 'CarController@update')->name('cars.available.update');
-            Route::delete('/cars/available/{car:plat_number}', 'CarController@destroy')->name('cars.available.destroy');
-            Route::get('/cars/{status}/{car:plat_number}/', 'CarController@show')->name('cars.show');
+            Route::group(['prefix' => 'cars'], function () {
+                Route::get('/available', 'CarController@available')->name('cars.available');
+                Route::get('/not-available', 'CarController@notAvailable')->name('cars.not-available');
+                Route::get('/available/create', 'CarController@create')->name('cars.available.create');
+                Route::post('/available', 'CarController@store')->name('cars.available.store');
+                Route::get('/edit/{car:plat_number}', 'CarController@edit')->name('cars.available.edit');
+                Route::patch('/available/{car:plat_number}', 'CarController@update')->name('cars.available.update');
+                Route::delete('/available/{car:plat_number}', 'CarController@destroy')->name('cars.available.destroy');
+                Route::get('/{status}/{car:plat_number}/', 'CarController@show')->name('cars.show');
+            });
+        });
+
+        Route::macro('transactionRoutes', function () {
+            Route::get('/transactions/edit/{transaction:invoice_number}', 'TransactionController@edit')->name('transactions.edit');
+            Route::resource('transactions', 'TransactionController')
+                ->parameters(['transactions' => 'transaction:invoice_number'])
+                ->except(['edit']);
         });
 
         Route::macro('profileRoutes', function () {

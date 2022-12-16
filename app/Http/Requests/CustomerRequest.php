@@ -24,14 +24,13 @@ class CustomerRequest extends FormRequest
      */
     public function rules()
     {
-        dd($this->route()->parameter('customer'));
         return [
             'name' => 'required|max:60',
-            'nik' => ['required', 'numeric', Rule::unique('customers', 'nik')->ignore($this->customer)],
+            'nik' => ['required', 'numeric', 'digits:12', Rule::unique('customers', 'nik')->ignore($this->customer)],
             'phone' => ['required', 'numeric', 'digits_between:10,12', Rule::unique('customers', 'phone')->ignore($this->customer)],
             'email' => ['nullable', 'email', Rule::unique('customers', 'email')->ignore($this->customer)],
             'address' => 'required',
-            'gambar' => 'nullable|mimes:png,jpg,jpeg|file|image|max:2500',
+            'image' => 'nullable|mimes:png,jpg,jpeg|file|image|max:2500',
         ];
     }
 }
