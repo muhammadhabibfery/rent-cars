@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Car;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -28,11 +27,11 @@ class CarRequest extends FormRequest
         return [
             'name' => 'required|max:60',
             'merk' => 'required|max:60',
-            'years' => 'required|numeric|digits:4',
-            'plat_number' => ['required', 'alpha_num', 'max:10', Rule::unique('cars', 'plat_number')->ignore($this->car)],
+            'years' => 'required|numeric|min:1]digits:4',
+            'plat_number' => ['required', 'alpha_num', 'size:8', Rule::unique('cars', 'plat_number')->ignore($this->car)],
             'color' => 'required|alpha|max:20',
             'price' => 'required|numeric',
-            'gambar' => 'nullable|mimes:png,jpg,jpeg|file|image|max:2500',
+            'image' => 'nullable|mimes:png,jpg,jpeg|file|image|max:2500',
         ];
     }
 }

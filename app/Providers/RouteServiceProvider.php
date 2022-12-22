@@ -48,19 +48,23 @@ class RouteServiceProvider extends ServiceProvider
         });
 
         Route::macro('carRoutes', function () {
-            Route::group(['prefix' => 'cars'], function () {
-                Route::get('/available', 'CarController@available')->name('cars.available');
-                Route::get('/not-available', 'CarController@notAvailable')->name('cars.not-available');
-                Route::get('/available/create', 'CarController@create')->name('cars.available.create');
-                Route::post('/available', 'CarController@store')->name('cars.available.store');
-                Route::get('/edit/{car:plat_number}', 'CarController@edit')->name('cars.available.edit');
-                Route::patch('/available/{car:plat_number}', 'CarController@update')->name('cars.available.update');
-                Route::delete('/available/{car:plat_number}', 'CarController@destroy')->name('cars.available.destroy');
-                Route::get('/{status}/{car:plat_number}/', 'CarController@show')->name('cars.show');
-            });
+            Route::get('/cars/trash', 'CarController@indexTrash')->name('cars.trash');
+            Route::get('/cars/trash/{plat_number}', 'CarController@showTrash')->name('cars.trash.show');
+            Route::get('/cars/restore/{plat_number}', 'CarController@restore')->name('cars.restore');
+            Route::delete('/cars/force-delete/{plat_number}', 'CarController@forceDelete')->name('cars.force-delete');
+            Route::get('/cars/edit/{car:plat_number}', 'CarController@edit')->name('cars.edit');
+            Route::resource('cars', 'CarController')
+                ->parameters(['cars' => 'car:plat_number'])
+                ->except(['edit']);
         });
 
         Route::macro('transactionRoutes', function () {
+            Route::post('/transactions/generate-invoice', 'TransactionController@generateInvoiceNumber')
+                ->name('transactions.generate-invoice');
+            Route::post('/transactions/generate-return-amount', 'TransactionController@generateReturnAmount')
+                ->name('transactions.generate-return-amount');
+            Route::get('/transactions/print-pdf/{transaction:invoice_number}/{update?}', 'TransactionController@printTransaction')
+                ->name('transactions.print-pdf');
             Route::get('/transactions/edit/{transaction:invoice_number}', 'TransactionController@edit')->name('transactions.edit');
             Route::resource('transactions', 'TransactionController')
                 ->parameters(['transactions' => 'transaction:invoice_number'])

@@ -18,10 +18,10 @@ class CreateCarsTable extends Migration
             $table->string('name');
             $table->string('merk');
             $table->string('years', 4);
-            $table->string('plat_number')->unique();
+            $table->string('plat_number', 8)->unique()->index();
             $table->string('color');
             $table->bigInteger('price');
-            $table->string('car_image')->nullable();
+            $table->string('image')->nullable();
             $table->enum('status', ['AVAILABLE', 'NOT AVAILABLE']);
             $table->integer('created_by');
             $table->integer('updated_by')->nullable();

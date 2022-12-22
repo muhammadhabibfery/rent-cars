@@ -36,16 +36,6 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the transactions for the user
-     *
-     *
-     */
-    public function transactions()
-    {
-        return $this->hasMany(Transaction::class);
-    }
-
-    /**
      * set the user's name
      *
      * @param  string $value

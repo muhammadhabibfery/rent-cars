@@ -218,7 +218,7 @@ class CustomerController extends Controller
     }
 
     /**
-     * query all admins (users) by keyword
+     * query all customers by keyword
      *
      * @param  string|null $keyword
      * @param  int $number (define paginate data per page)

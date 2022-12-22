@@ -1,6 +1,6 @@
 @extends('layouts.sb-admin-2.master')
 
-@section('title', 'Halaman Customer')
+@section('title', 'Halaman Customer Terhapus')
 
 @section('content')
 <div class="row">

@@ -10,37 +10,73 @@ class Car extends Model
 {
     use SoftDeletes;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $guarded = ['id'];
+
+    /**
+     * The transactions that belong to the car.
+     */
     public function transactions()
     {
         return $this->belongsToMany(Transaction::class)
-            ->withPivot(['quantity'])
             ->withTimestamps();
     }
 
-    protected $guarded = ['gambar'];
-
+    /**
+     * set the car's name
+     *
+     * @param  string $value
+     * @return void
+     */
     public function setNameAttribute($value)
     {
         $this->attributes['name'] = Str::title($value);
     }
 
+    /**
+     * set the car's merk
+     *
+     * @param  string $value
+     * @return void
+     */
     public function setMerkAttribute($value)
     {
         $this->attributes['merk'] = Str::title($value);
     }
 
+    /**
+     * set the car's plat number
+     *
+     * @param  string $value
+     * @return void
+     */
     public function setPlatNumberAttribute($value)
     {
         $this->attributes['plat_number'] = Str::upper($value);
     }
 
+    /**
+     * set the car's color
+     *
+     * @param  string $value
+     * @return void
+     */
     public function setColorAttribute($value)
     {
         $this->attributes['color'] = Str::title($value);
     }
 
-    public function getCarImage()
+    /**
+     * get the car's image
+     *
+     * @return mixed
+     */
+    public function getImage()
     {
-        return ($this->car_image) ? asset('/storage' . '/' . $this->car_image) : asset('/img/default/no-image.png');
+        return ($this->image) ? asset('/storage' . '/' . $this->image) : asset('/img/default/no-image.png');
     }
 }

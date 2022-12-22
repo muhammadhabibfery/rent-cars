@@ -12,7 +12,8 @@ class VerifyCsrfToken extends Middleware
      * @var array
      */
     protected $except = [
-        //
+        'transactions/generate-invoice',
+        'transactions/generate-return-amount'
     ];
 
     protected function tokensMatch($request)

@@ -19,8 +19,6 @@ class Customer extends Model
 
     /**
      * Get the transactions for the customer
-     *
-     *
      */
     public function transactions()
     {

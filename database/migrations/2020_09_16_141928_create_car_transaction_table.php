@@ -17,7 +17,6 @@ class CreateCarTransactionTable extends Migration
             $table->id();
             $table->foreignId('car_id')->constrained()->onDelete('cascade');
             $table->foreignId('transaction_id')->constrained()->onDelete('cascade');
-            $table->integer('quantity');
             $table->timestamps();
         });
     }

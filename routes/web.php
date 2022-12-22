@@ -29,10 +29,6 @@ Route::group(['middleware' => ['prevent-back']], function () {
         Route::customerRoutes();
         Route::carRoutes();
         Route::transactionRoutes();
-
         Route::profileRoutes();
     });
 });
-
-// Next : Buat Fitur Transaksi (Halaman & Method index)
-    // ON PROGRESS : Buat Form Transaksi
